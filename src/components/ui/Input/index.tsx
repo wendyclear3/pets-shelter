@@ -132,13 +132,16 @@ const InputField = ({ onChange, type, name, label, placeholder, value = '', disa
           </div>
           {menuOpen && (
             <div className={s.menu}>
-              <input
-                className={s.searchCountry}
-                value={searchCountry}
-                placeholder="Поиск по странам"
-                type="text"
-                onChange={(e) => setSearchCountry(e.target.value)}
-              />
+              <div className={`${s.wrapper} ${s.withIcon} ${value !== '' && s.active}`}>
+                <input
+                  onChange={(event) => setSearchCountry(event.target.value)}
+                  type="text"
+                  placeholder="Поиск по странам"
+                  value={searchCountry}
+                />
+                <SearchIcon className={s.icon} active={searchCountry !== '' && true} />
+              </div>
+              <div className={s.menu__countries}>
               {countrycodes
                 .filter((cntry) => cntry.name.toLocaleLowerCase().startsWith(searchCountry.toLowerCase()))
                 .map((country) => (
@@ -150,6 +153,7 @@ const InputField = ({ onChange, type, name, label, placeholder, value = '', disa
                     {country.name} {country.dial_code}
                   </div>
                 ))}
+              </div>
             </div>
           )}
           <div className={`${s.divider} ${disabled && s.divider_disabled}`}></div>
